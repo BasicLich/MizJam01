@@ -1,22 +1,14 @@
 extends "res://StateMachine.gd"
 
-enum States {IDLE, RUN, JUMP, FALL}
+enum States {IDLE, RUN, JUMP, FALL, FAN_STRIKE}
 
-const MOVING_STATES = [States.IDLE, States.RUN, States.JUMP, States.FALL]
+const CONTROLLABLE_STATES = [States.IDLE, States.RUN, States.JUMP, States.FALL]
 
 func _ready():
 	call_deferred("set_state", States.IDLE)
 
 func _state_logic(_delta):
-	match state:
-		States.IDLE:
-			actor.idle_state()
-		States.RUN:
-			actor.run_state()
-		States.JUMP:
-			actor.jump_state()
-		States.FALL:
-			actor.fall_state()
+	pass
 
 func _state_transition(_delta):
 	if state == States.IDLE:
@@ -54,6 +46,8 @@ func _enter_state(new_state, old_state):
 			actor.animation_player.play("fall")
 			if old_state == States.IDLE or old_state == States.RUN:
 				actor.jump_grace_timer.start()
+		States.FAN_STRIKE:
+			actor.animation_player.play("fan_strike")
 
 func is_in_moving_state() -> bool:
-	return state in MOVING_STATES
+	return state in CONTROLLABLE_STATES
