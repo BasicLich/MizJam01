@@ -47,7 +47,15 @@ func _enter_state(new_state, old_state):
 			if old_state == States.IDLE or old_state == States.RUN:
 				actor.jump_grace_timer.start()
 		States.FAN_STRIKE:
-			actor.animation_player.play("fan_strike")
+			if actor.strike_dir == Vector2.DOWN:
+				actor.animation_player.play("fan_strike_down")
+			else:
+				actor.animation_player.play("fan_strike")
+
+func _exit_state(old_state, _new_state):
+	match old_state:
+		States.FAN_STRIKE:
+			actor.strike_dir = Vector2.ZERO
 
 func is_in_moving_state() -> bool:
 	return state in CONTROLLABLE_STATES

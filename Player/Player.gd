@@ -5,7 +5,7 @@ const CONTROLS = {
 	"down": "ui_down",
 	"left": "ui_left",
 	"right": "ui_right",
-	"jump": "ui_accept",
+	"jump": "jump",
 	"attack": "attack"
 }
 
@@ -13,8 +13,10 @@ onready var input_controls = CONTROLS
 
 const WindGust = preload("res://Player/WindGust.tscn")
 
+const SNAP = Vector2(0, 12)
 const MAX_FALL_SPEED = 148
 const FAN_STRIKE_RECOIL_SPEED = 256
+const FAN_STRIKE_VERTICAL_RECOIL_SPEED = 164
 onready var gravity = 10
 onready var speed = 72
 onready var jump_speed = 200
@@ -22,12 +24,14 @@ onready var jump_grace_timer = $JumpGraceTimer
 
 onready var velocity = Vector2()
 onready var face_direction = 1
+onready var strike_dir = Vector2()
 
 onready var state_machine = $StateMachine
 onready var animation_player = $AnimationPlayer
 onready var body = $Body
 onready var fan_strike_timer = $FanStrikeTimer
 onready var wind_slash_spawn = $Body/WindSlashSpawn
+onready var wind_slash_spawn_down = $Body/WindSlashSpawnDown
 onready var attack_cooldown_timer = $AttackCooldownTimer
 
 func _ready():
@@ -44,7 +48,10 @@ func _physics_process(_delta):
 	
 	# Stop vertical movement during fan strike
 	if state_machine.state == state_machine.States.FAN_STRIKE:
-		velocity.y = 0
+		if strike_dir == Vector2.DOWN:
+			velocity.x = 0
+		else:
+			velocity.y = 0
 	
 	# Movement
 	if can_move():
@@ -64,7 +71,11 @@ func _physics_process(_delta):
 		if can_jump():
 			jump()
 	
-	velocity.y = move_and_slide(velocity, Vector2.UP).y
+	if state_machine.state == state_machine.States.JUMP \
+			or strike_dir == Vector2.DOWN:
+		velocity.y = move_and_slide(velocity, Vector2.UP, true).y
+	else:
+		velocity.y = move_and_slide_with_snap(velocity, SNAP, Vector2.UP, true).y
 	
 	# Limit fall speed
 	if velocity.y > MAX_FALL_SPEED:
@@ -85,21 +96,32 @@ func can_attack():
 		and attack_cooldown_timer.is_stopped()
 
 func fan_strike():
-	state_machine.set_state(state_machine.States.FAN_STRIKE)
 	fan_strike_timer.start()
 	attack_cooldown_timer.start()
 	var wind_slash = WindGust.instance()
 	get_parent().add_child(wind_slash)
-	wind_slash.global_position = wind_slash_spawn.global_position
-	var slash_speed = 212
-	if face_direction == 1:
-		velocity.x = -FAN_STRIKE_RECOIL_SPEED
-		wind_slash.rotation = deg2rad(45)
-		wind_slash.set_velocity(slash_speed, 0)
+	if Input.is_action_pressed(input_controls["down"]):
+		strike_dir = Vector2.DOWN
+		wind_slash.global_position = wind_slash_spawn_down.global_position
+		wind_slash.rotation = deg2rad(135)
+		var slash_speed = 172
+		wind_slash.set_velocity(0, slash_speed)
+		velocity.x = 0
+		velocity.y = -FAN_STRIKE_VERTICAL_RECOIL_SPEED
 	else:
-		velocity.x = FAN_STRIKE_RECOIL_SPEED
-		wind_slash.rotation = deg2rad(-135)
-		wind_slash.set_velocity(-slash_speed, 0)
+		wind_slash.global_position = wind_slash_spawn.global_position
+		var slash_speed = 212
+		if face_direction == 1:
+			strike_dir = Vector2.RIGHT
+			velocity.x = -FAN_STRIKE_RECOIL_SPEED
+			wind_slash.rotation = deg2rad(45)
+			wind_slash.set_velocity(slash_speed, 0)
+		else:
+			strike_dir = Vector2.LEFT
+			velocity.x = FAN_STRIKE_RECOIL_SPEED
+			wind_slash.rotation = deg2rad(-135)
+			wind_slash.set_velocity(-slash_speed, 0)
+	state_machine.set_state(state_machine.States.FAN_STRIKE)
 
 func get_gravity() -> float:
 	var g = gravity
@@ -126,4 +148,4 @@ func is_jump_grace_active() -> bool:
 	return not jump_grace_timer.is_stopped()
 
 func _on_FanStrikeTimer_timeout():
-	state_machine.set_state(state_machine.States.IDLE)
+	state_machine.set_state(state_machine.States.FALL)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/player01.png" type="Texture" id=2]
@@ -135,7 +135,7 @@ tracks/9/keys = {
 "values": [ 45.0 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 resource_name = "fan_strike"
 length = 0.4
 tracks/0/type = "value"
@@ -223,8 +223,95 @@ tracks/6/keys = {
 "values": [ Vector2( 6, 4 ), Vector2( 5, 5 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "idle"
+[sub_resource type="Animation" id=7]
+resource_name = "fan_strike_down"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/RightHand:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 6 ), Vector2( 5, 5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/RightHand/RightFan:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 6 ), Vector2( 5, -5 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/RightHand/RightFan:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 180.0, 45.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/LeftHand:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 8 ), Vector2( -6, 5 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Body/LeftHand/LeftFan:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 4 ), Vector2( -4, -5 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Body/LeftHand/LeftFan:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ -180.0, -45.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Body/Sprite:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=4]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -348,8 +435,7 @@ tracks/9/keys = {
 "values": [ 45.0 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "jump"
+[sub_resource type="Animation" id=5]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -473,8 +559,7 @@ tracks/9/keys = {
 "values": [ -45.0 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "run"
+[sub_resource type="Animation" id=6]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -621,7 +706,7 @@ region_enabled = true
 region_rect = Rect2( 1, 12, 2, 2 )
 
 [node name="RightFan" type="Sprite" parent="Body/RightHand"]
-modulate = Color( 0.301961, 0.301961, 0.301961, 1 )
+modulate = Color( 0.372549, 0.372549, 0.372549, 1 )
 position = Vector2( 5, -5 )
 rotation = 0.785398
 texture = ExtResource( 5 )
@@ -640,12 +725,16 @@ texture = ExtResource( 4 )
 [node name="WindSlashSpawn" type="Position2D" parent="Body"]
 position = Vector2( 14, 4 )
 
+[node name="WindSlashSpawnDown" type="Position2D" parent="Body"]
+position = Vector2( 0, 16 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/fall = SubResource( 2 )
-anims/fan_strike = SubResource( 6 )
-anims/idle = SubResource( 3 )
-anims/jump = SubResource( 4 )
-anims/run = SubResource( 5 )
+anims/fan_strike = SubResource( 3 )
+anims/fan_strike_down = SubResource( 7 )
+anims/idle = SubResource( 4 )
+anims/jump = SubResource( 5 )
+anims/run = SubResource( 6 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )
@@ -659,6 +748,6 @@ wait_time = 0.4
 one_shot = true
 
 [node name="AttackCooldownTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.6
 one_shot = true
 [connection signal="timeout" from="FanStrikeTimer" to="." method="_on_FanStrikeTimer_timeout"]
