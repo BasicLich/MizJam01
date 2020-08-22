@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://SharedAssets/MainTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://SharedAssets/PixelFontNormal.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Obstacles/Spikes.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Obstacles/ExitDoor.tscn" type="PackedScene" id=5]
 
 [node name="Level01" type="Node2D"]
 __meta__ = {
@@ -30,6 +31,9 @@ JUMP"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ExitDoor" parent="." instance=ExtResource( 5 )]
+position = Vector2( 520, 224 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 64, 216 )

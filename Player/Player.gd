@@ -129,13 +129,16 @@ func fan_strike():
 func damage(amount: int):
 	if state_machine.state == state_machine.States.DEAD:
 		return
-	
 	if amount < 0:
 		amount = 0
 	hp -= amount
 	if hp <= 0:
 		hp = 0
 		state_machine.set_state(state_machine.States.DEAD)
+
+func finish_level():
+	# TODO: transition to next level
+	print("Finished level")
 
 func get_gravity() -> float:
 	var g = gravity
