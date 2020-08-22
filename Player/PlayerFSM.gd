@@ -1,6 +1,6 @@
 extends "res://StateMachine.gd"
 
-enum States {IDLE, RUN, JUMP, FALL, FAN_STRIKE}
+enum States {IDLE, RUN, JUMP, FALL, FAN_STRIKE, DEAD}
 
 const CONTROLLABLE_STATES = [States.IDLE, States.RUN, States.JUMP, States.FALL]
 
@@ -51,6 +51,12 @@ func _enter_state(new_state, old_state):
 				actor.animation_player.play("fan_strike_down")
 			else:
 				actor.animation_player.play("fan_strike")
+		States.DEAD:
+			actor.animation_player.stop()
+			actor.hide()
+			actor.velocity.x = 0
+			actor.velocity.y = 0
+			actor.death_timer.start()
 
 func _exit_state(old_state, _new_state):
 	match old_state:

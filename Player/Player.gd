@@ -26,6 +26,8 @@ onready var velocity = Vector2()
 onready var face_direction = 1
 onready var strike_dir = Vector2()
 
+onready var hp = 3
+
 onready var state_machine = $StateMachine
 onready var animation_player = $AnimationPlayer
 onready var body = $Body
@@ -33,11 +35,12 @@ onready var fan_strike_timer = $FanStrikeTimer
 onready var wind_slash_spawn = $Body/WindSlashSpawn
 onready var wind_slash_spawn_down = $Body/WindSlashSpawnDown
 onready var attack_cooldown_timer = $AttackCooldownTimer
-
-func _ready():
-	pass
+onready var death_timer = $DeathTimer
 
 func _physics_process(_delta):
+	if state_machine.state == state_machine.States.DEAD:
+		return
+	
 	if state_machine.state == state_machine.States.FAN_STRIKE:
 		velocity.x *= 0.9
 	else:
@@ -123,6 +126,17 @@ func fan_strike():
 			wind_slash.set_velocity(-slash_speed, 0)
 	state_machine.set_state(state_machine.States.FAN_STRIKE)
 
+func damage(amount: int):
+	if state_machine.state == state_machine.States.DEAD:
+		return
+	
+	if amount < 0:
+		amount = 0
+	hp -= amount
+	if hp <= 0:
+		hp = 0
+		state_machine.set_state(state_machine.States.DEAD)
+
 func get_gravity() -> float:
 	var g = gravity
 	# Floaty jump
@@ -149,3 +163,7 @@ func is_jump_grace_active() -> bool:
 
 func _on_FanStrikeTimer_timeout():
 	state_machine.set_state(state_machine.States.FALL)
+
+func _on_DeathTimer_timeout():
+	# TODO: if out of lives, game over
+	get_tree().reload_current_scene()

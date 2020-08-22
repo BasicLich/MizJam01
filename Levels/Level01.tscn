@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://SharedAssets/MainTileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://SharedAssets/PixelFontNormal.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Obstacles/Spikes.tscn" type="PackedScene" id=4]
+
+[node name="Level01" type="Node2D"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+cell_quadrant_size = 8
+format = 1
+tile_data = PoolIntArray( 65535, 0, 0, 0, 0, 2, 131071, 0, 65536, 65536, 0, 65538, 196607, 0, 65536, 131072, 0, 65538, 262143, 0, 65536, 196608, 0, 65538, 327679, 0, 65536, 262144, 0, 65538, 393215, 0, 65536, 327680, 0, 65538, 458751, 0, 65536, 393216, 0, 65538, 524287, 0, 65536, 458752, 0, 65538, 589823, 0, 65536, 524288, 0, 65538, 655359, 0, 65536, 589824, 0, 65538, 720895, 0, 65536, 655360, 0, 65538, 655377, 0, 0, 655378, 0, 2, 786431, 0, 65536, 720896, 0, 65538, 720913, 0, 65536, 720914, 0, 65538, 851967, 0, 65536, 786432, 0, 65538, 786441, 0, 0, 786442, 0, 1, 786443, 0, 2, 786447, 0, 0, 786448, 0, 1, 786449, 0, 65540, 786450, 0, 65538, 786454, 0, 0, 786455, 0, 2, 917503, 0, 65536, 851968, 0, 65538, 851977, 0, 65536, 851978, 0, 131075, 851979, 0, 65538, 851983, 0, 65536, 851984, 0, 65537, 851985, 0, 131075, 851986, 0, 65538, 851990, 0, 65536, 851991, 0, 65538, 983039, 0, 65536, 917504, 0, 65539, 917505, 0, 1, 917506, 0, 1, 917507, 0, 1, 917508, 0, 1, 917509, 0, 1, 917510, 0, 1, 917511, 0, 1, 917512, 0, 1, 917513, 0, 65540, 917514, 0, 65537, 917515, 0, 65539, 917516, 0, 1, 917517, 0, 1, 917518, 0, 1, 917519, 0, 65540, 917520, 0, 65537, 917521, 0, 131075, 917522, 0, 65539, 917523, 0, 1, 917524, 0, 1, 917525, 0, 1, 917526, 0, 65540, 917527, 0, 65539, 917528, 0, 1, 917529, 0, 1, 917530, 0, 1, 917531, 0, 1, 917532, 0, 1, 917533, 0, 1, 917534, 0, 1, 917535, 0, 1, 917536, 0, 1, 917537, 0, 2, 1048575, 0, 131072, 983040, 0, 131073, 983041, 0, 131073, 983042, 0, 131073, 983043, 0, 131073, 983044, 0, 131073, 983045, 0, 131073, 983046, 0, 131073, 983047, 0, 131073, 983048, 0, 131073, 983049, 0, 131073, 983050, 0, 131073, 983051, 0, 131073, 983052, 0, 131073, 983053, 0, 131073, 983054, 0, 131073, 983055, 0, 131073, 983056, 0, 131073, 983057, 0, 131073, 983058, 0, 131073, 983059, 0, 131073, 983060, 0, 131073, 983061, 0, 131073, 983062, 0, 131073, 983063, 0, 131073, 983064, 0, 131073, 983065, 0, 131073, 983066, 0, 131073, 983067, 0, 131073, 983068, 0, 131073, 983069, 0, 131073, 983070, 0, 131073, 983071, 0, 131073, 983072, 0, 131073, 983073, 0, 131074 )
+
+[node name="Label" type="Label" parent="."]
+modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 80.0
+margin_top = 104.0
+margin_right = 144.0
+margin_bottom = 134.0
+custom_fonts/font = ExtResource( 3 )
+text = "Z TO
+
+JUMP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 64, 216 )
+
+[node name="Camera2D" parent="Player" index="7"]
+limit_left = 0
+
+[node name="Sprite" type="Sprite" parent="."]
+
+[node name="SpikeNodes" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Spikes" parent="SpikeNodes" instance=ExtResource( 4 )]
+position = Vector2( 312, 216 )
+
+[node name="Spikes2" parent="SpikeNodes" instance=ExtResource( 4 )]
+position = Vector2( 328, 216 )
+
+[node name="Spikes3" parent="SpikeNodes" instance=ExtResource( 4 )]
+position = Vector2( 344, 216 )
+
+[editable path="Player"]

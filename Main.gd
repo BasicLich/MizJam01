@@ -28,7 +28,7 @@ func _on_button_focus_exited(btn):
 	btn.get_node("Arrow").hide()
 
 func _on_Start_pressed():
-	get_tree().change_scene("res://Gameplay.tscn")
+	get_tree().change_scene("res://Levels/Level01.tscn")
 
 func _on_Exit_pressed():
 	get_tree().quit()
