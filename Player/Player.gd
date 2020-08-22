@@ -15,7 +15,7 @@ const WindGust = preload("res://Player/WindGust.tscn")
 
 const SNAP = Vector2(0, 12)
 const MAX_FALL_SPEED = 148
-const FAN_STRIKE_RECOIL_SPEED = 256
+const FAN_STRIKE_RECOIL_SPEED = 264
 const FAN_STRIKE_VERTICAL_RECOIL_SPEED = 164
 onready var gravity = 10
 onready var speed = 72
