@@ -104,11 +104,12 @@ func _physics_process(_delta):
 		if can_jump():
 			jump()
 	
-	if state_machine.state == state_machine.States.JUMP \
-			or strike_dir == Vector2.DOWN:
-		velocity.y = move_and_slide(velocity + spring_velocity, Vector2.UP, true).y
-	else:
-		velocity.y = move_and_slide_with_snap(velocity + spring_velocity, SNAP, Vector2.UP, true).y
+	if death_timer.is_stopped():
+		if state_machine.state == state_machine.States.JUMP \
+				or strike_dir == Vector2.DOWN:
+			velocity.y = move_and_slide(velocity + spring_velocity, Vector2.UP, true).y
+		else:
+			velocity.y = move_and_slide_with_snap(velocity + spring_velocity, SNAP, Vector2.UP, true).y
 	
 	# Limit fall speed
 	if velocity.y > MAX_FALL_SPEED:
