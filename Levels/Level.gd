@@ -3,6 +3,7 @@ extends Node2D
 onready var level_finished_ui = $UILayer/LevelFinishedUI
 onready var theme = $ThemeSong
 onready var coin_slots = $UILayer/CoinSlots/Slots
+onready var pause_menu = $UILayer/PauseMenu
 
 onready var coins_collected = [false, false, false]
 
@@ -23,6 +24,7 @@ func finish_level():
 	theme.stop()
 	level_finished_ui.show_ui()
 	check_coins_collected()
+	pause_menu.can_pause = false
 
 func check_coins_collected():
 	Globals.update_coins_collected_in_level(Globals.current_level_index, coins_collected)

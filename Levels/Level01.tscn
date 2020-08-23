@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://SharedAssets/MainTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Player/DebugSpawn.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Levels/chippey.ogg" type="AudioStream" id=12]
 [ext_resource path="res://SharedAssets/coin.png" type="Texture" id=13]
+[ext_resource path="res://PauseMenu.tscn" type="PackedScene" id=14]
 
 [node name="Level01" type="Node2D"]
 script = ExtResource( 9 )
@@ -230,6 +231,8 @@ margin_bottom = 40.0
 texture = ExtResource( 13 )
 
 [node name="LevelFinishedUI" parent="UILayer" instance=ExtResource( 10 )]
+
+[node name="PauseMenu" parent="UILayer" instance=ExtResource( 14 )]
 
 [node name="DebugSpawn" parent="." instance=ExtResource( 11 )]
 position = Vector2( 432, 196 )

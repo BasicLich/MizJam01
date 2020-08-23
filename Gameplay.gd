@@ -14,7 +14,7 @@ func _ready():
 			btn.get_child(0).hide()
 	
 	# Check coins collected already
-	for i in range(0, 3):
+	for i in range(0, Globals.number_of_levels):
 		var coins_collected = Globals.coins_in_levels[i]
 		for j in range(0, 3):
 			if coins_collected[j]:
@@ -22,7 +22,10 @@ func _ready():
 				if slots != null:
 					slots.modulate = Color(1, 1, 1, 1)
 	
-	# TODO: lock levels until you finished the previous one
+	# Lock levels until you finished the previous one
+	for i in range(Globals.number_of_levels):
+		if not Globals.levels_unlocked[i]:
+			buttons.get_node("Level" + str(i+1)).disabled = true
 
 func _on_button_focus_entered(btn):
 	btn.get_node("Arrow").show()

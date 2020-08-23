@@ -10,7 +10,13 @@ var coins_in_levels = [
 	[false, false, false],
 	[false, false, false]
 ]
+var levels_unlocked = [
+	true,
+	false,
+	false
+]
 var current_level_index = 0
+var number_of_levels = 3
 
 var coins_collected = 0
 
@@ -24,6 +30,7 @@ func _ready():
 func next_level():
 	current_level_index += 1
 	if current_level_index < LEVELS.size():
+		levels_unlocked[current_level_index] = true
 		get_tree().change_scene(LEVELS[current_level_index])
 	else:
 		# TODO: all levels finished
