@@ -28,10 +28,6 @@ func _physics_process(delta):
 
 func wind_gust_touched(gust):
 	velocity.x = push_speed * sign(gust.velocity.x)
-#	if gust.velocity.x < global_position.x:
-#		velocity.x = push_speed
-#	else:
-#		velocity.x = -push_speed
 
 func get_gravity() -> float:
 	var g = gravity

@@ -5,4 +5,4 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.has_method("damage"):
-		body.damage(99)
+		body.damage(99, true)

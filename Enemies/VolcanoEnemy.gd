@@ -7,7 +7,7 @@ onready var player_detected = false
 onready var face_direction = 1
 onready var gravity = 10
 onready var speed = 16
-onready var push_speed = 96
+onready var push_speed = 128
 onready var velocity = Vector2()
 
 onready var body = $Body
@@ -18,6 +18,11 @@ onready var animation_player = $AnimationPlayer
 onready var pushed_duration_timer = $PushedDurationTimer
 onready var attack_cooldown_timer = $AttackCooldownTimer
 onready var flame_spawn = $FlameSpawn
+onready var stomp_sfx = $StompSound
+onready var left_floor_raycast = $LeftFloorRay
+onready var right_floor_raycast = $RightFloorRay
+onready var death_sfx = $DeathSound
+
 onready var player = null
 
 func _ready():
@@ -46,6 +51,9 @@ func attack():
 		spawn_flame()
 		yield(get_tree().create_timer(0.2), "timeout")
 
+func play_stomp_sound():
+	stomp_sfx.play()
+
 func spawn_flame():
 	var flame = Flame.instance()
 	get_parent().add_child(flame)
@@ -55,7 +63,7 @@ func spawn_flame():
 	flame.velocity.y = -64
 
 func can_attack():
-	return attack_cooldown_timer.is_stopped()
+	return attack_cooldown_timer.is_stopped() and !is_dead()
 
 func face_player():
 	if player == null:
@@ -78,7 +86,6 @@ func _on_DamageArea_body_entered(body):
 func _on_PlayerDetect_body_entered(body):
 	if body.is_in_group("Players"):
 		player_detected = true
-		state_machine.set_state(state_machine.States.ATTACK)
 
 func _on_PlayerDetect_body_exited(body):
 	if body.is_in_group("Players"):
@@ -88,14 +95,20 @@ func is_player_in_range():
 	return player_detected
 
 func wind_gust_touched(gust):
-	if gust.global_position.x < global_position.x:
-		velocity.x = push_speed
-	else:
-		velocity.x = -push_speed
+	if is_dead():
+		return
+	
+	velocity.x = push_speed * sign(gust.velocity.x)
 	state_machine.set_state(state_machine.States.PUSHED)
 
-func damage(amount):
-	queue_free()
+func damage(amount: int, ignore_immunity: bool = false):
+	if is_dead():
+		return
+	
+	death_sfx.play()
+	$Particles.emitting = false
+	body.hide()
+	state_machine.set_state(state_machine.States.DEAD)
 
 func get_gravity() -> float:
 	var g = gravity
@@ -108,9 +121,15 @@ func turn():
 
 func can_walk() -> bool:
 	return state_machine.state != state_machine.States.PUSHED \
-		and state_machine.state != state_machine.States.ATTACK
+		and state_machine.state != state_machine.States.ATTACK and !is_dead()
+
+func is_dead():
+	return state_machine.state == state_machine.States.DEAD
 
 func _on_WalkTimer_timeout():
+	if is_dead():
+		return
+	
 	if can_walk():
 		if randf() < 0.5:
 			turn()
@@ -130,3 +149,9 @@ func _on_PushedDurationTimer_timeout():
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "attack":
 		attack()
+
+func _on_AttackCooldownTimer_timeout():
+	pass
+
+func _on_DeathSound_finished():
+	queue_free()

@@ -152,10 +152,10 @@ func fan_strike():
 	fan_attack_sfx.play(0.01)
 	state_machine.set_state(state_machine.States.FAN_STRIKE)
 
-func damage(amount: int):
+func damage(amount: int, ignore_immunity: bool = false):
 	if state_machine.state == state_machine.States.DEAD:
 		return
-	if has_damage_immunity():
+	if has_damage_immunity() and not ignore_immunity:
 		return
 	
 	if amount < 0:

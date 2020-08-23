@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Footstep1__001.wav-e789ba8826f062cf753b37f689aff220.sample"
+
+[deps]
+
+source_file="res://Enemies/Footstep1__001.wav"
+dest_files=[ "res://.import/Footstep1__001.wav-e789ba8826f062cf753b37f689aff220.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

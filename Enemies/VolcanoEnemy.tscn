@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Enemies/volcano_enemy.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/VolcanoEnemy.gd" type="Script" id=2]
 [ext_resource path="res://Enemies/VolcanoEnemyFSM.gd" type="Script" id=3]
+[ext_resource path="res://Enemies/Footstep1__001.wav" type="AudioStream" id=4]
+[ext_resource path="res://Enemies/Explosion2__006.wav" type="AudioStream" id=5]
 
 [sub_resource type="Animation" id=6]
 resource_name = "attack"
@@ -19,6 +21,26 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, -6 ), Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, -6 ), Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, -6 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.05, 0.35, 0.65 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "play_stomp_sound"
+}, {
+"args": [  ],
+"method": "play_stomp_sound"
+}, {
+"args": [  ],
+"method": "play_stomp_sound"
+} ]
 }
 
 [sub_resource type="Animation" id=1]
@@ -86,6 +108,28 @@ extents = Vector2( 88, 32 )
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 7, 14 )
 
+[sub_resource type="Gradient" id=7]
+offsets = PoolRealArray( 0, 0.696296 )
+colors = PoolColorArray( 0.901961, 0.282353, 0.180392, 1, 0.956863, 0.705882, 0.105882, 1 )
+
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
+
+[sub_resource type="ParticlesMaterial" id=9]
+emission_shape = 1
+emission_sphere_radius = 4.0
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 32.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 16.0
+initial_velocity_random = 0.4
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 3.0
+scale_random = 0.77
+color_ramp = SubResource( 8 )
+
 [node name="VolcanoEnemy" type="KinematicBody2D"]
 collision_layer = 4
 script = ExtResource( 2 )
@@ -142,10 +186,37 @@ position = Vector2( 0, -17 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="StompSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = 4.0
+pitch_scale = 0.5
+
+[node name="Particles" type="Particles2D" parent="."]
+position = Vector2( 0, -16 )
+amount = 4
+local_coords = false
+process_material = SubResource( 9 )
+
+[node name="RightFloorRay" type="RayCast2D" parent="."]
+position = Vector2( 10, 13 )
+enabled = true
+cast_to = Vector2( 0, 8 )
+
+[node name="LeftFloorRay" type="RayCast2D" parent="."]
+position = Vector2( -10, 13 )
+enabled = true
+cast_to = Vector2( 0, 8 )
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -8.0
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_AttackCooldownTimer_timeout"]
 [connection signal="body_entered" from="DamageArea" to="." method="_on_DamageArea_body_entered"]
 [connection signal="body_entered" from="PlayerDetect" to="." method="_on_PlayerDetect_body_entered"]
 [connection signal="body_exited" from="PlayerDetect" to="." method="_on_PlayerDetect_body_exited"]
 [connection signal="timeout" from="WalkTimer" to="." method="_on_WalkTimer_timeout"]
 [connection signal="timeout" from="WalkDurationTimer" to="." method="_on_WalkDurationTimer_timeout"]
 [connection signal="timeout" from="PushedDurationTimer" to="." method="_on_PushedDurationTimer_timeout"]
+[connection signal="finished" from="DeathSound" to="." method="_on_DeathSound_finished"]
