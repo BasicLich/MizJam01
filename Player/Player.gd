@@ -27,6 +27,7 @@ onready var face_direction = 1
 onready var strike_dir = Vector2()
 
 onready var hp = 3
+onready var damage_immunity = false
 
 onready var state_machine = $StateMachine
 onready var animation_player = $AnimationPlayer
@@ -41,6 +42,8 @@ onready var death_sfx = $DeathSound
 onready var footstep_sfx = $Footstep
 onready var footstep_timer = $FootstepTimer
 onready var jump_sfx = $JumpSound
+onready var damage_animation_player = $DamageAnimationPlayer
+onready var damage_immunity_timer = $DamageImmunityTimer
 
 onready var debug_points = []
 onready var current_debug_point = 0
@@ -59,6 +62,8 @@ func _physics_process(_delta):
 			global_position = debug_points[current_debug_point].global_position
 			current_debug_point += 1
 			current_debug_point %= debug_points.size()
+	if Input.is_action_just_pressed("skip_level"):
+		Globals.next_level()
 	
 	if state_machine.state == state_machine.States.FAN_STRIKE:
 		velocity.x *= 0.9
@@ -150,12 +155,20 @@ func fan_strike():
 func damage(amount: int):
 	if state_machine.state == state_machine.States.DEAD:
 		return
+	if has_damage_immunity():
+		return
+	
 	if amount < 0:
 		amount = 0
 	hp -= amount
+	damage_animation_player.play("hurt")
+	damage_immunity_timer.start()
+	damage_immunity = true
+	death_sfx.play()
 	if hp <= 0:
 		hp = 0
-		death_sfx.play()
+		#death_sfx.play()
+		get_parent().stop_music()
 		state_machine.set_state(state_machine.States.DEAD)
 
 func collect_coin():
@@ -201,3 +214,9 @@ func _on_FootstepTimer_timeout():
 	if state_machine.state == state_machine.States.RUN:
 		footstep_sfx.play()
 		footstep_timer.start()
+
+func has_damage_immunity() -> bool:
+	return damage_immunity
+
+func _on_DamageImmunityTimer_timeout():
+	damage_immunity = false

@@ -16,3 +16,8 @@ func set_velocity(x: float, y: float):
 
 func _on_LifeTimer_timeout():
 	queue_free()
+
+
+func _on_Area2D_body_entered(body):
+	if body.has_method("wind_gust_touched"):
+		body.wind_gust_touched(self)

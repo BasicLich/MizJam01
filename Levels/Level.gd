@@ -5,7 +5,11 @@ onready var theme = $ThemeSong
 onready var coin_slots = $UILayer/CoinSlots/Slots
 
 func _ready():
+	randomize()
 	theme.play()
+
+func stop_music():
+	theme.stop()
 
 func finish_level():
 	theme.stop()
