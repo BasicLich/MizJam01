@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Jump__005.wav-fe5dd949f8b1c27ae1a8c44f2204401d.sample"
+
+[deps]
+
+source_file="res://Obstacles/Jump__005.wav"
+dest_files=[ "res://.import/Jump__005.wav-fe5dd949f8b1c27ae1a8c44f2204401d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

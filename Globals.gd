@@ -2,7 +2,8 @@ extends Node
 
 const LEVELS = [
 	"res://Levels/Level01.tscn",
-	"res://Levels/Level02.tscn"
+	"res://Levels/Level02.tscn",
+	"res://Levels/Level03.tscn",
 ]
 var current_level_index = 0
 

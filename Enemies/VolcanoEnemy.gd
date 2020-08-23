@@ -29,7 +29,7 @@ func _ready():
 	player = get_tree().get_nodes_in_group("Players")[0]
 	walk_timer.start()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# Gravity
 	velocity.y += get_gravity()
 	
@@ -38,7 +38,8 @@ func _physics_process(delta):
 		face_direction = sign(velocity.x)
 	body.scale.x = face_direction
 	
-	velocity.y = move_and_slide(velocity, Vector2.UP, true).y
+	if not is_dead():
+		velocity.y = move_and_slide(velocity, Vector2.UP, true).y
 	
 	# Limit fall speed
 	if velocity.y > MAX_FALL_SPEED:
@@ -47,8 +48,9 @@ func _physics_process(delta):
 func attack():
 	attack_cooldown_timer.start()
 	state_machine.set_state(state_machine.States.IDLE)
-	for i in range(2):
-		spawn_flame()
+	for _i in range(2):
+		if is_inside_tree():
+			spawn_flame()
 		yield(get_tree().create_timer(0.2), "timeout")
 
 func play_stomp_sound():
@@ -58,8 +60,8 @@ func spawn_flame():
 	var flame = Flame.instance()
 	get_parent().add_child(flame)
 	flame.global_position = flame_spawn.global_position
-	var speed = rand_range(32, 64)
-	flame.velocity.x = speed * face_direction
+	var flame_speed = rand_range(32, 64)
+	flame.velocity.x = flame_speed * face_direction
 	flame.velocity.y = -64
 
 func can_attack():
@@ -76,23 +78,29 @@ func face_player():
 	if face_direction != dir:
 		turn()
 
-func _on_DamageArea_body_entered(body):
-	if body == self:
+func _on_DamageArea_body_entered(body_entered):
+	if body_entered == self:
 		return
 	
-	if body.has_method("damage"):
-		body.damage(10)
+	if body_entered.has_method("damage"):
+		body_entered.damage(10)
 
-func _on_PlayerDetect_body_entered(body):
-	if body.is_in_group("Players"):
+func _on_PlayerDetect_body_entered(body_entered):
+	if body_entered.is_in_group("Players"):
 		player_detected = true
 
-func _on_PlayerDetect_body_exited(body):
-	if body.is_in_group("Players"):
+func _on_PlayerDetect_body_exited(body_entered):
+	if body_entered.is_in_group("Players"):
 		player_detected = false
 
 func is_player_in_range():
 	return player_detected
+
+func spring_jump(impulse, dir):
+	velocity.y = dir.y * impulse
+	velocity.x = dir.x * impulse * 1
+	if state_machine.state == state_machine.States.ATTACK:
+		state_machine.set_state(state_machine.States.IDLE)
 
 func wind_gust_touched(gust):
 	if is_dead():
@@ -101,7 +109,7 @@ func wind_gust_touched(gust):
 	velocity.x = push_speed * sign(gust.velocity.x)
 	state_machine.set_state(state_machine.States.PUSHED)
 
-func damage(amount: int, ignore_immunity: bool = false):
+func damage(_amount: int, _ignore_immunity: bool = false):
 	if is_dead():
 		return
 	

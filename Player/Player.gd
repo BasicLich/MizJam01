@@ -23,6 +23,7 @@ onready var jump_speed = 200
 onready var jump_grace_timer = $JumpGraceTimer
 
 onready var velocity = Vector2()
+onready var spring_velocity = Vector2()
 onready var face_direction = 1
 onready var strike_dir = Vector2()
 
@@ -69,6 +70,11 @@ func _physics_process(_delta):
 		velocity.x *= 0.9
 	else:
 		velocity.x = 0
+
+	# Spring physics
+	spring_velocity.x *= 0.9
+	if abs(spring_velocity.x) < 0.1:
+		spring_velocity.x = 0
 	
 	# Gravity
 	velocity.y += get_gravity()
@@ -100,9 +106,9 @@ func _physics_process(_delta):
 	
 	if state_machine.state == state_machine.States.JUMP \
 			or strike_dir == Vector2.DOWN:
-		velocity.y = move_and_slide(velocity, Vector2.UP, true).y
+		velocity.y = move_and_slide(velocity + spring_velocity, Vector2.UP, true).y
 	else:
-		velocity.y = move_and_slide_with_snap(velocity, SNAP, Vector2.UP, true).y
+		velocity.y = move_and_slide_with_snap(velocity + spring_velocity, SNAP, Vector2.UP, true).y
 	
 	# Limit fall speed
 	if velocity.y > MAX_FALL_SPEED:
@@ -118,6 +124,13 @@ func jump():
 	jump_sfx.play()
 	velocity.y = -get_jump_speed()
 	state_machine.set_state(state_machine.States.JUMP)
+
+func spring_jump(impulse, dir):
+	if dir.y != 0:
+		velocity.y = dir.y * impulse
+	spring_velocity.x = dir.x * impulse
+	if velocity.y < 0:
+		state_machine.set_state(state_machine.States.JUMP)
 
 func can_attack():
 	return state_machine.state != state_machine.States.FAN_STRIKE \

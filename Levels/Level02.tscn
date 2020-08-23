@@ -124,6 +124,7 @@ position = Vector2( 64, 192 )
 
 [node name="Camera2D" parent="Player" index="7"]
 limit_left = 0
+limit_right = 1184
 editor_draw_limits = true
 
 [node name="ThemeSong" parent="." index="12"]
