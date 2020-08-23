@@ -770,7 +770,7 @@ one_shot = true
 
 [node name="FanAttackSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
-volume_db = -12.0
+volume_db = -8.0
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
@@ -778,7 +778,7 @@ volume_db = -10.0
 
 [node name="Footstep" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
-volume_db = -16.0
+volume_db = -5.0
 
 [node name="FootstepTimer" type="Timer" parent="."]
 wait_time = 0.2
@@ -786,7 +786,6 @@ one_shot = true
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
-volume_db = -10.0
 [connection signal="timeout" from="FanStrikeTimer" to="." method="_on_FanStrikeTimer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
 [connection signal="timeout" from="FootstepTimer" to="." method="_on_FootstepTimer_timeout"]

@@ -25,3 +25,5 @@ __meta__ = {
 [node name="UILayer" type="CanvasLayer" parent="."]
 
 [node name="LevelFinishedUI" parent="UILayer" instance=ExtResource( 2 )]
+
+[node name="ThemeSong" type="AudioStreamPlayer" parent="."]

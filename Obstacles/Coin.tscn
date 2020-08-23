@@ -52,7 +52,7 @@ anims/hover = SubResource( 2 )
 
 [node name="Pickup" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-volume_db = -8.0
+volume_db = -4.0
 
 [node name="Particles" type="Particles2D" parent="."]
 emitting = false
