@@ -29,6 +29,7 @@ onready var strike_dir = Vector2()
 
 onready var hp = 3
 onready var damage_immunity = false
+onready var has_died = false # Hacky fix for death sfx playing even after dying
 
 onready var state_machine = $StateMachine
 onready var animation_player = $AnimationPlayer
@@ -50,7 +51,7 @@ onready var debug_points = []
 onready var current_debug_point = 0
 
 func _physics_process(_delta):
-	if state_machine.state == state_machine.States.DEAD:
+	if state_machine.state == state_machine.States.DEAD or has_died:
 		return
 	
 	# Debug warping, TODO disable for release
@@ -135,7 +136,7 @@ func spring_jump(impulse, dir):
 
 func can_attack():
 	return state_machine.state != state_machine.States.FAN_STRIKE \
-		and attack_cooldown_timer.is_stopped()
+		and attack_cooldown_timer.is_stopped() and !has_died
 
 func fan_strike():
 	fan_strike_timer.start()
@@ -178,10 +179,11 @@ func damage(amount: int, ignore_immunity: bool = false):
 	damage_animation_player.play("hurt")
 	damage_immunity_timer.start()
 	damage_immunity = true
-	death_sfx.play()
+	if not has_died:
+		death_sfx.play()
 	if hp <= 0:
 		hp = 0
-		#death_sfx.play()
+		has_died = true
 		get_parent().stop_music()
 		state_machine.set_state(state_machine.States.DEAD)
 
@@ -220,8 +222,7 @@ func _on_FanStrikeTimer_timeout():
 	state_machine.set_state(state_machine.States.FALL)
 
 func _on_DeathTimer_timeout():
-	# TODO: checkpoints?
-	get_tree().reload_current_scene()
+	get_parent().play_death_transition()
 
 func _on_FootstepTimer_timeout():
 	if state_machine.state == state_machine.States.RUN:

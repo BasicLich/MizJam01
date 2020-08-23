@@ -2,6 +2,9 @@ extends Node2D
 
 onready var buttons = $Levels
 onready var blip_sfx = $Blip
+onready var animation_player = $AnimationPlayer
+onready var transition_active = false
+onready var level_to_enter = 0
 
 func _ready():
 	buttons.get_child(0).grab_focus()
@@ -28,18 +31,46 @@ func _ready():
 			buttons.get_node("Level" + str(i+1)).disabled = true
 
 func _on_button_focus_entered(btn):
-	btn.get_node("Arrow").show()
-	blip_sfx.play()
+	if transition_active:
+		pass
+	else:
+		btn.get_node("Arrow").show()
+		blip_sfx.play()
 
 func _on_button_focus_exited(btn):
 	btn.get_node("Arrow").hide()
 
 func _on_Level1_pressed():
-	Globals.enter_level(0)
+	if transition_active:
+		return
+	transition_active = true
+	GlobalSounds.play_blip_confirm()
+	level_to_enter = 0
+	animation_player.play("level_transition")
 
 func _on_Level2_pressed():
-	Globals.enter_level(1)
+	if transition_active:
+		return
+	transition_active = true
+	GlobalSounds.play_blip_confirm()
+	level_to_enter = 1
+	animation_player.play("level_transition")
+
+func _on_Level3_pressed():
+	if transition_active:
+		return
+	transition_active = true
+	GlobalSounds.play_blip_confirm()
+	level_to_enter = 2
+	animation_player.play("level_transition")
 
 func _on_Back_pressed():
+	if transition_active:
+		return
+	
+	GlobalSounds.play_blip_confirm()
 	get_tree().change_scene("res://Main.tscn")
 
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "level_transition":
+		Globals.enter_level(level_to_enter)

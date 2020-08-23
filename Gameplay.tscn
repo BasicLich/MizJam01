@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://SharedAssets/PixelFontNormal.tres" type="DynamicFont" id=1]
 [ext_resource path="res://SharedAssets/MainTileset.tres" type="TileSet" id=2]
@@ -26,6 +26,34 @@
 [sub_resource type="StyleBoxEmpty" id=9]
 
 [sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="Animation" id=11]
+resource_name = "level_transition"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("LeftRect:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -184, -8 ), Vector2( -184, -8 ), Vector2( -8, -8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("RightRect:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 336, -8 ), Vector2( 336, -8 ), Vector2( 160, -8 ) ]
+}
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource( 3 )
@@ -250,7 +278,31 @@ texture = ExtResource( 4 )
 
 [node name="Blip" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/level_transition = SubResource( 11 )
+
+[node name="LeftRect" type="ColorRect" parent="."]
+margin_left = -184.0
+margin_top = -8.0
+margin_right = -16.0
+margin_bottom = 248.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightRect" type="ColorRect" parent="."]
+margin_left = 336.0
+margin_top = -8.0
+margin_right = 504.0
+margin_bottom = 248.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Levels/Level1" to="." method="_on_Level1_pressed"]
 [connection signal="pressed" from="Levels/Level2" to="." method="_on_Level2_pressed"]
-[connection signal="pressed" from="Levels/Level3" to="." method="_on_Level2_pressed"]
+[connection signal="pressed" from="Levels/Level3" to="." method="_on_Level3_pressed"]
 [connection signal="pressed" from="Levels/Back" to="." method="_on_Back_pressed"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

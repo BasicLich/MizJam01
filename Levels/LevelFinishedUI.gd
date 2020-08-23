@@ -14,7 +14,10 @@ func _input(event):
 	if can_read_input:
 		if event is InputEventKey:
 			if event.pressed:
-				Globals.next_level()
+				#Globals.next_level()
+				# Start transition effect
+				GlobalSounds.play_blip_confirm()
+				get_parent().get_parent().play_next_transition()
 				can_read_input = false
 
 func show_ui():

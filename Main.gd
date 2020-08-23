@@ -2,6 +2,7 @@ extends Node2D
 
 onready var buttons = $Buttons
 onready var blip_sfx = $Blip
+onready var blip_confirm_sfx = $BlipConfirm
 
 func _ready():
 	buttons.get_child(0).grab_focus()
@@ -21,6 +22,7 @@ func _on_button_focus_exited(btn):
 	btn.get_node("Arrow").hide()
 
 func _on_Start_pressed():
+	GlobalSounds.play_blip_confirm()
 	get_tree().change_scene("res://Gameplay.tscn")
 
 func _on_Exit_pressed():

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/blip_confirm.wav-3c6db7e936c1f3849532d16fd74cf70b.sample"
+
+[deps]
+
+source_file="res://SharedAssets/blip_confirm.wav"
+dest_files=[ "res://.import/blip_confirm.wav-3c6db7e936c1f3849532d16fd74cf70b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

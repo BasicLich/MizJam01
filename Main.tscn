@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://SharedAssets/PixelFontNormal.tres" type="DynamicFont" id=2]
 [ext_resource path="res://SharedAssets/blip.wav" type="AudioStream" id=3]
 [ext_resource path="res://SharedAssets/right_arrow.png" type="Texture" id=4]
+[ext_resource path="res://SharedAssets/blip_confirm.wav" type="AudioStream" id=5]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -113,5 +114,8 @@ texture = ExtResource( 4 )
 
 [node name="Blip" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+
+[node name="BlipConfirm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
 [connection signal="pressed" from="Buttons/Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="Buttons/Exit" to="." method="_on_Exit_pressed"]
