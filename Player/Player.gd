@@ -187,7 +187,6 @@ func damage(amount: int, ignore_immunity: bool = false):
 
 func collect_coin():
 	Globals.coins_collected += 1
-	# TODO: coin sfx
 
 func finish_level():
 	get_parent().finish_level()

@@ -6,7 +6,7 @@
 [ext_resource path="res://Enemies/Footstep1__001.wav" type="AudioStream" id=4]
 [ext_resource path="res://Enemies/Explosion2__006.wav" type="AudioStream" id=5]
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=1]
 resource_name = "attack"
 length = 0.65
 step = 0.05
@@ -43,8 +43,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "rest"
+[sub_resource type="Animation" id=2]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body/Sprite:frame")
 tracks/0/interp = 1
@@ -70,8 +69,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "walk"
+[sub_resource type="Animation" id=3]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -99,13 +97,13 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 5.5, 13 )
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 88, 32 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 7, 14 )
 
 [sub_resource type="Gradient" id=7]
@@ -144,9 +142,9 @@ hframes = 2
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/attack = SubResource( 6 )
-anims/rest = SubResource( 1 )
-anims/walk = SubResource( 2 )
+anims/attack = SubResource( 1 )
+anims/rest = SubResource( 2 )
+anims/walk = SubResource( 3 )
 
 [node name="AttackCooldownTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -157,7 +155,7 @@ visible = false
 position = Vector2( 0, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="PlayerDetect" type="Area2D" parent="."]
 visible = false
@@ -169,7 +167,7 @@ shape = SubResource( 5 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, 1 )
-shape = SubResource( 4 )
+shape = SubResource( 6 )
 
 [node name="WalkTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -187,7 +185,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="StompSound" type="AudioStreamPlayer" parent="."]
+[node name="StompSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
 volume_db = 4.0
 pitch_scale = 0.5
@@ -208,7 +206,7 @@ position = Vector2( -10, 13 )
 enabled = true
 cast_to = Vector2( 0, 8 )
 
-[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
 volume_db = -8.0
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var buttons = $Levels
+onready var blip_sfx = $Blip
 
 func _ready():
 	buttons.get_child(0).grab_focus()
@@ -20,9 +21,12 @@ func _ready():
 				var slots = get_node("Levels/Level" + str(i+1) + "/CoinSlots/Slots/Slot" + str(j+1))
 				if slots != null:
 					slots.modulate = Color(1, 1, 1, 1)
+	
+	# TODO: lock levels until you finished the previous one
 
 func _on_button_focus_entered(btn):
 	btn.get_node("Arrow").show()
+	blip_sfx.play()
 
 func _on_button_focus_exited(btn):
 	btn.get_node("Arrow").hide()

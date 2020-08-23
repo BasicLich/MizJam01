@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var buttons = $Buttons
+onready var blip_sfx = $Blip
 
 func _ready():
 	buttons.get_child(0).grab_focus()
@@ -14,6 +15,7 @@ func _ready():
 
 func _on_button_focus_entered(btn):
 	btn.get_node("Arrow").show()
+	blip_sfx.play()
 
 func _on_button_focus_exited(btn):
 	btn.get_node("Arrow").hide()
