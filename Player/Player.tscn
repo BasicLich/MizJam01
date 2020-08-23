@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/player01.png" type="Texture" id=2]
@@ -6,6 +6,10 @@
 [ext_resource path="res://Player/fan_weapon02.png" type="Texture" id=4]
 [ext_resource path="res://Player/fan_weapon01.png" type="Texture" id=5]
 [ext_resource path="res://Player/player01_no_hands.png" type="Texture" id=6]
+[ext_resource path="res://Player/Jump__006.wav" type="AudioStream" id=7]
+[ext_resource path="res://Player/Ouch__004.wav" type="AudioStream" id=8]
+[ext_resource path="res://Player/Footstep1__006.wav" type="AudioStream" id=9]
+[ext_resource path="res://Player/Jump__001.wav" type="AudioStream" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5, 4 )
@@ -763,5 +767,26 @@ editor_draw_drag_margin = true
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="FanAttackSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -12.0
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -10.0
+
+[node name="Footstep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -16.0
+
+[node name="FootstepTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -10.0
 [connection signal="timeout" from="FanStrikeTimer" to="." method="_on_FanStrikeTimer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
+[connection signal="timeout" from="FootstepTimer" to="." method="_on_FootstepTimer_timeout"]

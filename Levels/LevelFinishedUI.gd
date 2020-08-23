@@ -18,6 +18,7 @@ func _input(event):
 				can_read_input = false
 
 func show_ui():
+	$Victory.play()
 	start_delay_timer.start()
 
 func _on_AnimationPlayer_animation_finished(anim_name):

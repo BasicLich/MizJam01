@@ -36,6 +36,11 @@ onready var wind_slash_spawn = $Body/WindSlashSpawn
 onready var wind_slash_spawn_down = $Body/WindSlashSpawnDown
 onready var attack_cooldown_timer = $AttackCooldownTimer
 onready var death_timer = $DeathTimer
+onready var fan_attack_sfx = $FanAttackSound
+onready var death_sfx = $DeathSound
+onready var footstep_sfx = $Footstep
+onready var footstep_timer = $FootstepTimer
+onready var jump_sfx = $JumpSound
 
 onready var debug_points = []
 onready var current_debug_point = 0
@@ -105,6 +110,7 @@ func can_jump() -> bool:
 	return can_move() and (is_on_floor() or is_jump_grace_active())
 
 func jump():
+	jump_sfx.play()
 	velocity.y = -get_jump_speed()
 	state_machine.set_state(state_machine.States.JUMP)
 
@@ -138,6 +144,7 @@ func fan_strike():
 			velocity.x = FAN_STRIKE_RECOIL_SPEED
 			wind_slash.rotation = deg2rad(-135)
 			wind_slash.set_velocity(-slash_speed, 0)
+	fan_attack_sfx.play(0.01)
 	state_machine.set_state(state_machine.States.FAN_STRIKE)
 
 func damage(amount: int):
@@ -148,6 +155,7 @@ func damage(amount: int):
 	hp -= amount
 	if hp <= 0:
 		hp = 0
+		death_sfx.play()
 		state_machine.set_state(state_machine.States.DEAD)
 
 func collect_coin():
@@ -188,3 +196,8 @@ func _on_FanStrikeTimer_timeout():
 func _on_DeathTimer_timeout():
 	# TODO: checkpoints?
 	get_tree().reload_current_scene()
+
+func _on_FootstepTimer_timeout():
+	if state_machine.state == state_machine.States.RUN:
+		footstep_sfx.play()
+		footstep_timer.start()

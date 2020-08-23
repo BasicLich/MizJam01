@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://SharedAssets/PixelFontNormal.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Levels/LevelFinishedUI.gd" type="Script" id=2]
+[ext_resource path="res://Levels/VictorySmall.ogg" type="AudioStream" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "show_ui"
@@ -74,7 +75,12 @@ wait_time = 1.5
 one_shot = true
 
 [node name="StartDelay" type="Timer" parent="."]
+wait_time = 1.5
 one_shot = true
+
+[node name="Victory" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -4.0
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="InputDelayTimer" to="." method="_on_InputDelayTimer_timeout"]
 [connection signal="timeout" from="StartDelay" to="." method="_on_StartDelay_timeout"]

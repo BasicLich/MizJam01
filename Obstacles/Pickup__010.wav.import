@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Pickup__010.wav-2d4afde27f40ecae1010322bd848e8ef.sample"
+
+[deps]
+
+source_file="res://Obstacles/Pickup__010.wav"
+dest_files=[ "res://.import/Pickup__010.wav-2d4afde27f40ecae1010322bd848e8ef.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -40,6 +40,8 @@ func _enter_state(new_state, old_state):
 			actor.animation_player.play("idle")
 		States.RUN:
 			actor.animation_player.play("run")
+			actor.footstep_sfx.play()
+			actor.footstep_timer.start()
 		States.JUMP:
 			actor.animation_player.play("jump")
 		States.FALL:
