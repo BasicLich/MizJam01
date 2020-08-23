@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://SharedAssets/MainTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Levels/LevelFinishedUI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Player/DebugSpawn.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Levels/chippey.ogg" type="AudioStream" id=12]
+[ext_resource path="res://SharedAssets/coin.png" type="Texture" id=13]
 
 [node name="Level01" type="Node2D"]
 script = ExtResource( 9 )
@@ -139,8 +140,16 @@ position = Vector2( 72, 49 )
 rotation = 2.35619
 texture = ExtResource( 7 )
 
-[node name="Coin" parent="." instance=ExtResource( 8 )]
+[node name="Coin3" parent="." instance=ExtResource( 8 )]
 position = Vector2( 1027, 32 )
+coin_index = 2
+
+[node name="Coin1" parent="." instance=ExtResource( 8 )]
+position = Vector2( 344, 136 )
+
+[node name="Coin2" parent="." instance=ExtResource( 8 )]
+position = Vector2( 800, 128 )
+coin_index = 1
 
 [node name="ExitDoor" parent="." instance=ExtResource( 5 )]
 position = Vector2( 1003, 224 )
@@ -191,6 +200,37 @@ rotation = 3.14159
 
 [node name="LevelFinishedUI" parent="UILayer" instance=ExtResource( 10 )]
 
+[node name="CoinSlots" type="Node2D" parent="UILayer"]
+
+[node name="Slots" type="HBoxContainer" parent="UILayer/CoinSlots"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 64.0
+margin_bottom = 48.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot1" type="TextureRect" parent="UILayer/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 16.0
+margin_bottom = 40.0
+texture = ExtResource( 13 )
+
+[node name="Slot2" type="TextureRect" parent="UILayer/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 20.0
+margin_right = 36.0
+margin_bottom = 40.0
+texture = ExtResource( 13 )
+
+[node name="Slot3" type="TextureRect" parent="UILayer/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 40.0
+margin_right = 56.0
+margin_bottom = 40.0
+texture = ExtResource( 13 )
+
 [node name="DebugSpawn" parent="." instance=ExtResource( 11 )]
 position = Vector2( 432, 196 )
 warp_enabled = true
@@ -202,6 +242,9 @@ warp_enabled = true
 [node name="ThemeSong" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
 volume_db = -5.0
+[connection signal="collected" from="Coin3" to="." method="_on_coin_collected"]
+[connection signal="collected" from="Coin1" to="." method="_on_coin_collected"]
+[connection signal="collected" from="Coin2" to="." method="_on_coin_collected"]
 
 [editable path="JumpText/PlayerStatic"]
 

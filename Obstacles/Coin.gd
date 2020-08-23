@@ -1,5 +1,9 @@
 extends Node2D
 
+export (int, 0, 2) var coin_index = 0
+
+signal collected(i)
+
 onready var picked_up = false
 
 func _on_Area_body_entered(body):
@@ -9,6 +13,7 @@ func _on_Area_body_entered(body):
 		pickup()
 
 func pickup():
+	emit_signal("collected", coin_index)
 	$Pickup.play()
 	$CoinSprite.hide()
 	$Particles.emitting = true

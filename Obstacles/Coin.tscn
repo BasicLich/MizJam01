@@ -35,7 +35,9 @@ orbit_velocity_random = 0.0
 scale = 0.3
 scale_random = 0.5
 
-[node name="Coin" type="Node2D"]
+[node name="Coin" type="Node2D" groups=[
+"Coins",
+]]
 script = ExtResource( 2 )
 
 [node name="CoinSprite" type="Sprite" parent="."]
