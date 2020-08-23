@@ -1,9 +1,33 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://SharedAssets/PixelFontNormal.tres" type="DynamicFont" id=1]
 [ext_resource path="res://SharedAssets/MainTileset.tres" type="TileSet" id=2]
+[ext_resource path="res://Gameplay.gd" type="Script" id=3]
+[ext_resource path="res://SharedAssets/right_arrow.png" type="Texture" id=4]
+[ext_resource path="res://SharedAssets/coin.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="StyleBoxEmpty" id=10]
 
 [node name="Gameplay" type="Node2D"]
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -13,7 +37,216 @@ tile_set = ExtResource( 2 )
 cell_size = Vector2( 16, 16 )
 cell_quadrant_size = 8
 format = 1
-tile_data = PoolIntArray( 589832, 0, 0, 589833, 0, 1, 589834, 0, 2, 655368, 0, 65536, 655369, 0, 131075, 655370, 0, 65539, 655371, 0, 2, 720904, 0, 65536, 720905, 0, 65537, 720906, 0, 65537, 720907, 0, 65538, 786434, 0, 0, 786435, 0, 2, 786440, 0, 65536, 786443, 0, 65539, 786444, 2, 0, 786450, 1, 0, 786451, 0, 1, 851970, 0, 65536, 851971, 0, 65538, 851976, 0, 65536, 851980, 0, 65539, 851981, 2, 0, 851985, 1, 0, 851986, 0, 65540, 917504, 0, 0, 917505, 0, 1, 917506, 0, 65540, 917507, 0, 65539, 917508, 0, 1, 917509, 0, 1, 917510, 0, 1, 917511, 0, 1, 917512, 0, 65540, 917517, 0, 65539, 917518, 0, 1, 917519, 0, 1, 917520, 0, 1, 917521, 0, 65540 )
+tile_data = PoolIntArray( -1, 0, 0, -65536, 0, 1, -65535, 0, 1, -65534, 0, 1, -65533, 0, 1, -65532, 0, 1, -65531, 0, 1, -65530, 0, 1, -65529, 0, 1, -65528, 0, 1, -65527, 0, 1, -65526, 0, 1, -65525, 0, 1, -65524, 0, 1, -65523, 0, 1, -65522, 0, 1, -65521, 0, 1, -65520, 0, 1, -65519, 0, 1, -65518, 0, 1, -65517, 0, 1, -65516, 0, 2, 65535, 0, 65536, 0, 0, 3, 1, 0, 131073, 2, 0, 131073, 3, 0, 131073, 4, 0, 131073, 5, 0, 131073, 6, 0, 131073, 7, 0, 131073, 8, 0, 131073, 9, 0, 131073, 10, 0, 131073, 11, 0, 131073, 12, 0, 131073, 13, 0, 131073, 14, 0, 131073, 15, 0, 131073, 16, 0, 131073, 17, 0, 131073, 18, 0, 131073, 19, 0, 4, 20, 0, 65538, 131071, 0, 65536, 65536, 0, 65538, 65555, 0, 65536, 65556, 0, 65538, 196607, 0, 65536, 131072, 0, 65538, 131091, 0, 65536, 131092, 0, 65538, 262143, 0, 65536, 196608, 0, 65538, 196627, 0, 65536, 196628, 0, 65538, 327679, 0, 65536, 262144, 0, 65538, 262163, 0, 65536, 262164, 0, 65538, 393215, 0, 65536, 327680, 0, 65538, 327699, 0, 65536, 327700, 0, 65538, 458751, 0, 65536, 393216, 0, 65538, 393235, 0, 65536, 393236, 0, 65538, 524287, 0, 65536, 458752, 0, 65538, 458771, 0, 65536, 458772, 0, 65538, 589823, 0, 65536, 524288, 0, 65538, 524307, 0, 65536, 524308, 0, 65538, 655359, 0, 65536, 589824, 0, 65538, 589843, 0, 65536, 589844, 0, 65538, 720895, 0, 65536, 655360, 0, 65538, 655379, 0, 65536, 655380, 0, 65538, 786431, 0, 65536, 720896, 0, 65538, 720915, 0, 65536, 720916, 0, 65538, 851967, 0, 65536, 786432, 0, 65538, 786451, 0, 65536, 786452, 0, 65538, 917503, 0, 65536, 851968, 0, 65538, 851987, 0, 65536, 851988, 0, 65538, 983039, 0, 65536, 917504, 0, 65539, 917505, 0, 1, 917506, 0, 1, 917507, 0, 1, 917508, 0, 1, 917509, 0, 1, 917510, 0, 1, 917511, 0, 1, 917512, 0, 1, 917513, 0, 1, 917514, 0, 1, 917515, 0, 1, 917516, 0, 1, 917517, 0, 1, 917518, 0, 1, 917519, 0, 1, 917520, 0, 1, 917521, 0, 1, 917522, 0, 1, 917523, 0, 65540, 917524, 0, 65538, 1048575, 0, 131072, 983040, 0, 131073, 983041, 0, 131073, 983042, 0, 131073, 983043, 0, 131073, 983044, 0, 131073, 983045, 0, 131073, 983046, 0, 131073, 983047, 0, 131073, 983048, 0, 131073, 983049, 0, 131073, 983050, 0, 131073, 983051, 0, 131073, 983052, 0, 131073, 983053, 0, 131073, 983054, 0, 131073, 983055, 0, 131073, 983056, 0, 131073, 983057, 0, 131073, 983058, 0, 131073, 983059, 0, 131073, 983060, 0, 131074 )
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 114.023, 49.1369 )
+[node name="Header" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 48.0
+margin_right = 304.0
+margin_bottom = 62.0
+custom_fonts/font = ExtResource( 1 )
+text = "SELECT A LEVEL"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Levels" type="VBoxContainer" parent="."]
+margin_left = 64.0
+margin_top = 88.0
+margin_right = 176.0
+margin_bottom = 168.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level1" type="Button" parent="Levels"]
+margin_right = 112.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 112, 24 )
+mouse_filter = 2
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_fonts/font = ExtResource( 1 )
+text = "LEVEL 1"
+flat = true
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Arrow" type="Sprite" parent="Levels/Level1"]
+position = Vector2( -12, 13 )
+texture = ExtResource( 4 )
+
+[node name="CoinSlots" type="Node2D" parent="Levels/Level1"]
+position = Vector2( 125, -2 )
+
+[node name="Slots" type="HBoxContainer" parent="Levels/Level1/CoinSlots"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 64.0
+margin_bottom = 48.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot1" type="TextureRect" parent="Levels/Level1/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 16.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+
+[node name="Slot2" type="TextureRect" parent="Levels/Level1/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 20.0
+margin_right = 36.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+
+[node name="Slot3" type="TextureRect" parent="Levels/Level1/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 40.0
+margin_right = 56.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+
+[node name="Level2" type="Button" parent="Levels"]
+margin_top = 28.0
+margin_right = 112.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 112, 24 )
+mouse_filter = 2
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/disabled = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
+custom_fonts/font = ExtResource( 1 )
+text = "LEVEL 2"
+flat = true
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Arrow" type="Sprite" parent="Levels/Level2"]
+position = Vector2( -12, 13 )
+texture = ExtResource( 4 )
+
+[node name="CoinSlots" type="Node2D" parent="Levels/Level2"]
+position = Vector2( 125, -2 )
+
+[node name="Slots" type="HBoxContainer" parent="Levels/Level2/CoinSlots"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 64.0
+margin_bottom = 48.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot1" type="TextureRect" parent="Levels/Level2/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 16.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+
+[node name="Slot2" type="TextureRect" parent="Levels/Level2/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 20.0
+margin_right = 36.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+
+[node name="Slot3" type="TextureRect" parent="Levels/Level2/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 40.0
+margin_right = 56.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+
+[node name="Level3" type="Button" parent="Levels"]
+margin_top = 56.0
+margin_right = 112.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 112, 24 )
+mouse_filter = 2
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/disabled = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
+custom_fonts/font = ExtResource( 1 )
+text = "LEVEL 3"
+flat = true
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Arrow" type="Sprite" parent="Levels/Level3"]
+position = Vector2( -12, 13 )
+texture = ExtResource( 4 )
+
+[node name="CoinSlots" type="Node2D" parent="Levels/Level3"]
+position = Vector2( 125, -2 )
+
+[node name="Slots" type="HBoxContainer" parent="Levels/Level3/CoinSlots"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 64.0
+margin_bottom = 48.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot1" type="TextureRect" parent="Levels/Level3/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 16.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+
+[node name="Slot2" type="TextureRect" parent="Levels/Level3/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 20.0
+margin_right = 36.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+
+[node name="Slot3" type="TextureRect" parent="Levels/Level3/CoinSlots/Slots"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 40.0
+margin_right = 56.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+
+[node name="Back" type="Button" parent="Levels"]
+margin_top = 84.0
+margin_right = 112.0
+margin_bottom = 108.0
+rect_min_size = Vector2( 112, 24 )
+mouse_filter = 2
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/disabled = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
+custom_fonts/font = ExtResource( 1 )
+text = "BACK"
+flat = true
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Arrow" type="Sprite" parent="Levels/Back"]
+position = Vector2( -12, 13 )
+texture = ExtResource( 4 )
+[connection signal="pressed" from="Levels/Level1" to="." method="_on_Level1_pressed"]
+[connection signal="pressed" from="Levels/Level2" to="." method="_on_Level2_pressed"]
+[connection signal="pressed" from="Levels/Level3" to="." method="_on_Level2_pressed"]
+[connection signal="pressed" from="Levels/Back" to="." method="_on_Back_pressed"]
