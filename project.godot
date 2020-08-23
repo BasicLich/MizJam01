@@ -15,9 +15,9 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Miz Jam 1"
+config/name="Super Leaf Fan Adventure"
 run/main_scene="res://Main.tscn"
-config/icon="res://icon.png"
+config/icon="res://game_icon.png"
 
 [autoload]
 

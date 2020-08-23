@@ -42,6 +42,7 @@ func unpause_game():
 
 func _on_Quit_pressed():
 	get_tree().paused = false
+	GlobalSounds.play_blip_confirm()
 	get_tree().change_scene("res://Main.tscn")
 
 func _on_Resume_pressed():
