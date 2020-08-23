@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://SharedAssets/fan_weapon02_white.png" type="Texture" id=2]
+[ext_resource path="res://SharedAssets/player01_no_hands_white.png" type="Texture" id=3]
+[ext_resource path="res://SharedAssets/fan_weapon01_white.png" type="Texture" id=4]
+
+[node name="PlayerStatic" instance=ExtResource( 1 )]
+collision_layer = 0
+collision_mask = 2147483648
+script = null
+
+[node name="Sprite" parent="Body" index="0"]
+texture = ExtResource( 3 )
+
+[node name="RightHand" parent="Body" index="1"]
+position = Vector2( 6, 4 )
+texture = ExtResource( 3 )
+region_rect = Rect2( 77, 9, 2, 4 )
+
+[node name="RightFan" parent="Body/RightHand" index="0"]
+position = Vector2( 4, -1 )
+rotation = 1.57079
+texture = ExtResource( 4 )
+
+[node name="LeftHand" parent="Body" index="2"]
+position = Vector2( 2, 4 )
+texture = ExtResource( 3 )
+region_rect = Rect2( 65, 9, 2, 4 )
+
+[node name="LeftFan" parent="Body/LeftHand" index="0"]
+position = Vector2( 7, 0 )
+rotation = 1.57079
+texture = ExtResource( 2 )
+
+[node name="StateMachine" parent="." index="3"]
+script = null
+
+[node name="Camera2D" parent="." index="7"]
+current = false

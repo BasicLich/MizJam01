@@ -37,9 +37,23 @@ onready var wind_slash_spawn_down = $Body/WindSlashSpawnDown
 onready var attack_cooldown_timer = $AttackCooldownTimer
 onready var death_timer = $DeathTimer
 
+onready var debug_points = []
+onready var current_debug_point = 0
+
 func _physics_process(_delta):
 	if state_machine.state == state_machine.States.DEAD:
 		return
+	
+	# Debug warping, TODO disable for release
+	if Input.is_action_just_pressed("warp"):
+		if debug_points.empty():
+			for each in get_tree().get_nodes_in_group("DebugPoints"):
+				if each.is_warp_enabled():
+					debug_points.append(each)
+		if not debug_points.empty():
+			global_position = debug_points[current_debug_point].global_position
+			current_debug_point += 1
+			current_debug_point %= debug_points.size()
 	
 	if state_machine.state == state_machine.States.FAN_STRIKE:
 		velocity.x *= 0.9
@@ -88,7 +102,7 @@ func can_move() -> bool:
 	return state_machine.is_in_moving_state()
 
 func can_jump() -> bool:
-	return is_on_floor() or is_jump_grace_active()
+	return can_move() and (is_on_floor() or is_jump_grace_active())
 
 func jump():
 	velocity.y = -get_jump_speed()
@@ -136,9 +150,13 @@ func damage(amount: int):
 		hp = 0
 		state_machine.set_state(state_machine.States.DEAD)
 
+func collect_coin():
+	Globals.coins_collected += 1
+	# TODO: coin sfx
+
 func finish_level():
-	# TODO: transition to next level
-	print("Finished level")
+	get_parent().finish_level()
+	state_machine.set_state(state_machine.States.WIN)
 
 func get_gravity() -> float:
 	var g = gravity
@@ -168,5 +186,5 @@ func _on_FanStrikeTimer_timeout():
 	state_machine.set_state(state_machine.States.FALL)
 
 func _on_DeathTimer_timeout():
-	# TODO: if out of lives, game over
+	# TODO: checkpoints?
 	get_tree().reload_current_scene()
