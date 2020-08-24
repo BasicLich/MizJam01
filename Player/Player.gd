@@ -55,17 +55,17 @@ func _physics_process(_delta):
 		return
 	
 	# Debug warping, TODO disable for release
-	if Input.is_action_just_pressed("warp"):
-		if debug_points.empty():
-			for each in get_tree().get_nodes_in_group("DebugPoints"):
-				if each.is_warp_enabled():
-					debug_points.append(each)
-		if not debug_points.empty():
-			global_position = debug_points[current_debug_point].global_position
-			current_debug_point += 1
-			current_debug_point %= debug_points.size()
-	if Input.is_action_just_pressed("skip_level"):
-		Globals.next_level()
+#	if Input.is_action_just_pressed("warp"):
+#		if debug_points.empty():
+#			for each in get_tree().get_nodes_in_group("DebugPoints"):
+#				if each.is_warp_enabled():
+#					debug_points.append(each)
+#		if not debug_points.empty():
+#			global_position = debug_points[current_debug_point].global_position
+#			current_debug_point += 1
+#			current_debug_point %= debug_points.size()
+#	if Input.is_action_just_pressed("skip_level"):
+#		Globals.next_level()
 	
 	if state_machine.state == state_machine.States.FAN_STRIKE:
 		velocity.x *= 0.9
