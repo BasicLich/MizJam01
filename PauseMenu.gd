@@ -17,7 +17,7 @@ func _ready():
 	
 	hide()
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
 		if visible:
 			unpause_game()

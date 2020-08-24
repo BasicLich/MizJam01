@@ -21,7 +21,7 @@ var number_of_levels = 3
 var coins_collected = 0
 
 func _ready():
-	OS.window_size = Vector2(800, 600)
+	OS.window_size = Vector2(640, 480) #Vector2(800, 600)
 	# Center the window after resizing
 	var screen_size = OS.get_screen_size()
 	var window_size = OS.get_window_size()
